@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 
 const TableCards = () => {
   const statePeople = useSelector((store) => store.people);
-  // console.log("statePeople", statePeople);
-  const dispatch = useDispatch();
   const [dataCards, setDataCards] = useState(statePeople);
 
   useEffect(() => {
     if (!!statePeople) {
-      // console.log("statePeople", statePeople);
       setDataCards(statePeople);
     }
   }, [statePeople]);
@@ -30,9 +27,6 @@ const TableCards = () => {
       flex: 1,
       minWidth: 150,
       renderCell: hideDigits,
-      // renderCell: (params) => (
-      //   <>{params.value + params.row.category}</>
-      // ),
     },
     {
       field: "holderName",

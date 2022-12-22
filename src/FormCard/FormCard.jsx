@@ -5,9 +5,9 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // CSS Modules, react-datepicker-cssmodules.css
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-import { NumericFormat, PatternFormat } from "react-number-format";
+import { PatternFormat } from "react-number-format";
 import { addPeople } from "../redux/states/people";
-import { format, parse } from "date-fns";
+import { format } from "date-fns"; // parse
 import { v4 as uuidv4 } from "uuid";
 import sha512 from "js-sha512";
 
