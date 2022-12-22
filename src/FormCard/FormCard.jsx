@@ -8,16 +8,20 @@ import "react-datepicker/dist/react-datepicker.css";
 import { NumericFormat, PatternFormat } from "react-number-format";
 import { addPeople } from "../redux/states/people";
 import { format, parse } from "date-fns";
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from "uuid";
+
+import cardIcon from  "../cardIcon.png"
 
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
+import CardMedia from '@mui/material/CardMedia';
 
 const FormCard = () => {
   const dispatch = useDispatch();
   const {
     control,
     register,
+    reset,
     // watch,
     handleSubmit,
     formState: { errors },
@@ -27,9 +31,14 @@ const FormCard = () => {
     const id = uuidv4();
     const formatedTime = format(data.validThru, "MM/yyyy");
     data.validThru = formatedTime;
-    data.id = id
-    // console.log(data, formatedTime);
+    data.id = id;
     dispatch(addPeople(data));
+    reset({
+      cardNumber: "",
+      holderName: "",
+      validThru: "",
+      cvv: "",
+    });
   };
 
   // console.log(
@@ -54,9 +63,13 @@ const FormCard = () => {
     >
       <Card
         elevation={12}
-        className="p-4 m-4 justify-center flex flex-col items-center"
+        className="p-4 justify-center flex flex-col items-center"
         sx={{ borderRadius: "16px !important" }}
       >
+        {/* background: `url(${productCTAImageDots})`, */}
+        <CardMedia>
+          <img src={cardIcon} alt="accept all cards" height="21px" width="280px" />
+        </CardMedia>
         <form
           className="p-4 w-full justify-center flex flex-col"
           onSubmit={handleSubmit(onSubmit)}
@@ -70,7 +83,7 @@ const FormCard = () => {
             control={control}
             id="cardNumber"
             name="cardNumber"
-            rules={{ required: true, pattern: /\d+/, maxLength: 19 }}
+            rules={{ required: true, pattern: /\d+/, maxLength: 19, minLength: 19 }}
             render={({ field }) => (
               <PatternFormat
                 className="mb-4 rounded border-2 border-indigo-500/25 hover:border-indigo-500/75"
@@ -79,7 +92,7 @@ const FormCard = () => {
               />
             )}
           />
-          {/* {errors.cardNumber && <p>credit card number must have 16 digits.</p>} */}
+          {errors.cardNumber && <p>credit card number must have 16 digits.</p>}
           <br />
           <label className="text-left" htmlFor="holderName">
             CARD HOLDER NAME
@@ -88,9 +101,9 @@ const FormCard = () => {
           <input
             className="mb-4 rounded border-2 border-indigo-500/25 hover:border-indigo-500/75"
             id="holderName"
-            {...register("holderName", { required: true })}
+            {...register("holderName", { required: true, maxLength: 84 })}
           />
-          {/* {errors.holderName && <p>Please enter full name.</p>} */}
+          {errors.holderName && <p>Please enter full name.</p>}
           <br />
           <Box
             className="mb-4 justify-center flex"
@@ -107,7 +120,7 @@ const FormCard = () => {
                 id="validThru"
                 name="validThru"
                 control={control}
-                rules={{ required: true, maxLength: 3 }}
+                rules={{ required: true }}
                 render={({ field }) => (
                   <ReactDatePicker
                     className="w-48 rounded border-2 border-indigo-500/25 hover:border-indigo-500/75"
@@ -124,7 +137,7 @@ const FormCard = () => {
                 )}
               />
             </Box>
-            {/* {errors.validThru && <p>Please select month and year.</p>} */}
+            {errors.validThru && <p>Please select month and year.</p>}
             <Box className="mb-4 justify-center flex flex-col w-4/12">
               <label className="text-left" htmlFor="cvv">
                 CVV
@@ -134,9 +147,9 @@ const FormCard = () => {
                 control={control}
                 id="cvv"
                 name="cvv"
-                rules={{ required: true, pattern: /\d+/ }}
+                rules={{ required: true, pattern: /\d+/, maxLength: 3 }}
                 render={({ field }) => (
-                  <NumericFormat
+                  <PatternFormat
                     className="w-24 rounded border-2 border-indigo-500/25 hover:border-indigo-500/75"
                     format="###"
                     {...field}
@@ -145,7 +158,7 @@ const FormCard = () => {
               />
             </Box>
           </Box>
-          {/* {errors.cvv && <p>Please enter number for CVV .</p>} */}
+          {errors.cvv && <p>Please enter number for CVV .</p>}
           <br />
           <button
             className="mt-2 rounded-lg p-4 bg-slate-400 hover:bg-slate-500 border border-slate-300 hover:border-slate-400 "

@@ -1,15 +1,13 @@
 import { getLocalStorage, setLocalStorage } from "../../utilities";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
-const initialState = [
-  {
-    id: 1,
-    holderName: "",
-    cardNumber: "",
-    validThru: "",
-    cvv: "",
-  },
-];
+const initialState = {
+  id: 1,
+  holderName: "",
+  cardNumber: "",
+  validThru: "",
+  cvv: "",
+};
 
 export const peopleSlice = createSlice({
   name: "people",
@@ -18,11 +16,16 @@ export const peopleSlice = createSlice({
     : initialState,
   reducers: {
     addPeople: (state, action) => {
-      let local = [];
-      local.push(getLocalStorage("people"));
-      local.push(action.payload);
-      setLocalStorage("people", local);
-      return action.payload;
+      if (!Array.isArray(current(state))) {
+        const snapCard = [{ ...action.payload }];       
+        setLocalStorage("people", snapCard);
+        return snapCard;
+      }
+      const arrayCards = [];
+      current(state).map((x) => arrayCards.push(x));
+      arrayCards.push(action.payload);
+      setLocalStorage("people", arrayCards);
+      return arrayCards;
     },
   },
 });
