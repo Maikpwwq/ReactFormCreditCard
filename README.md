@@ -1,6 +1,8 @@
-# ReactFormCreditCard
+# React Form Credit Card
 
-react-hook-form/redux/react-datepicker/mui/material/React
+Este aplicativo de React usa react-hook-form para crear el formulario, react-datepicker para manipular el calendario al seleccionar la fecha de vencimiento. La información es compartida entre componentes reactivos por medio del Store de redux. Las interfaces graficas hacen uso de mui/material y Tailwind.
+
+Por motivos de seguridad el Código de Verificación de Tarjeta se almacena en el Store con una encryptación SHA-512 utilizando la libreria js-sha512.
 
 # Getting Started with Create React App
 
