@@ -1,5 +1,9 @@
 # React Form Credit Card
 
+Visit the project site deploy with Netlify from here -> [React Form Credit Card] (https://63a4a96beccde8005c092f62--effulgent-boba-edf9a9.netlify.app/)
+
+
+
 Este aplicativo de React usa react-hook-form para crear el formulario, react-datepicker para manipular el calendario al seleccionar la fecha de vencimiento. La información es compartida entre componentes reactivos por medio del Store de redux. Las interfaces graficas hacen uso de mui/material y Tailwind.
 
 Por motivos de seguridad el Código de Verificación de Tarjeta se almacena en el Store con una encryptación SHA-512 utilizando la libreria js-sha512.
@@ -32,8 +36,6 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `npm run eject`
 
